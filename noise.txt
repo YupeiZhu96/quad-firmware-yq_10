@@ -1,4 +1,4 @@
-I tried to use a complementary filter but I have no idea that why it has a sudden drop or rise when the roll is rising or droping. Say if the roll is 30 right now and we want to turn it to 0. The roll will increase to 60 and then go to 0 if the complementary filter is applied. This strange behavior makes it extramely hard to tune pid. So we use a median filter instead. It cuts some noise but it is not as effective as the complementary filter. So we still get some wiggling in the end. 
+We used a complementary filter and it works finally.
 Also, we change the register.
 We change LSM9DS1_REGISTER_CTRL_REG5_XL to 0x38
 LSM9DS1_REGISTER_CTRL_REG6_XL to 0x72
