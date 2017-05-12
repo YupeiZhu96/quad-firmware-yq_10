@@ -11,6 +11,7 @@ void setup() {
   lcd.setBrightness(5);
   Serial.begin(115200);
   rfBegin(21);
+  pinMode(16, INPUT_PULLUP); 
 }
 int clamp(int c, int threhold){
   if(c > threhold) return threhold;
@@ -25,20 +26,15 @@ void setVals(int val, char type, char* msg){
   msg[2] = val2;
 }
 void loop() {
+  int button1Value = digitalRead(16); 
   int yaw = analogRead(0) - y;
   int throttle = analogRead(1) - t;
   int roll = analogRead(2) - r;
   int pitch = analogRead(3) - p;
+  Serial.println(button1Value);
+  char str[] = "sss";
+  if(button1Value == 0) rfWrite(str,3);
   
-  
-  Serial.print("Yaw:");
-  Serial.println(yaw);
-  Serial.print("Throttle:");
-  Serial.println(throttle);
-  Serial.print("Roll:");
-  Serial.println(roll);
-  Serial.print("Pitch:");
-  Serial.println(pitch);
   yaw = yaw < 0 ? map(yaw, 137-y, 0, 0, 749) : map(yaw, 0, 817-y, 750, 1500);
   throttle = throttle < 0 ? map(throttle, 123-t, 0, 0, 749) : map(throttle, 0, 817-t, 750, 1500);
   roll = roll < 0 ? map(roll, 129-r, 0, 0, 749) : map(roll, 0, 817-r, 750, 1500);
@@ -62,14 +58,6 @@ void loop() {
   lcd.setCursor(1,8);
   lcd.print("R: ");
   lcd.print(roll);
-  Serial.print("Yaw:");
-  Serial.println(yaw);
-  Serial.print("Throttle:");
-  Serial.println(throttle);
-  Serial.print("Roll:");
-  Serial.println(roll);
-  Serial.print("Pitch:");
-  Serial.println(pitch);
   
 
   char toSend[12];
